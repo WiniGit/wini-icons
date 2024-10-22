@@ -2,6 +2,7 @@
   "name": "wini icons",
   "api": "1.0.0",
   "main": "code.js",
+  "ui":"SwapInstance.html",
   "capabilities": [],
   "enableProposedApi": false,
   "documentAccess": "dynamic-page",
