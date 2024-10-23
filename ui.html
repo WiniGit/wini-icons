@@ -11716,7 +11716,7 @@
                 
                 image.addEventListener('click', (ev) => {
                     // Gửi dữ liệu SVG đến Figma
-                    parent.postMessage({ pluginMessage: { type: 'import-svg', iconPath } }, '*');
+                    fetch(iconPath).then(svgData => {  parent.postMessage({ pluginMessage: { type: 'import-svg', svgData } }, '*'); })
                 });
 
                 const resultItem = document.createElement('div');
