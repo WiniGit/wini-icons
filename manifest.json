@@ -2,7 +2,7 @@
   "name": "wini icons",
   "api": "1.0.0",
   "main": "code.js",
-  "ui":"SwapInstance.html",
+  "ui":"ui.html",
   "capabilities": [],
   "enableProposedApi": false,
   "documentAccess": "dynamic-page",
@@ -11,7 +11,8 @@
   ],
   "networkAccess": {
     "allowedDomains": [
-      "none"
-    ]
+      "*"
+    ],
+    "reasoning":"a"
   }
 }
