@@ -532,15 +532,21 @@
                     d="M10.4144 9.00015L17.4144 2.00015L16.0002 0.585938L9.00015 7.58594L2.00015 0.585938L0.585938 2.00015L7.58594 9.00015L0.585938 16.0002L2.00015 17.4144L9.00015 10.4144L16.0002 17.4144L17.4144 16.0002L10.4144 9.00015Z"
                     fill="#61616B" />
             </svg>
+            <svg id="btn-options" xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 24 24">
+                <g stroke-linecap="round" fill="#61616b" stroke-linejoin="round" class="nc-icon-wrapper"><line data-color="color-2" fill="none" stroke="#61616b" stroke-width="2" x1="3" y1="13" x2="10" y2="13"></line> <line data-color="color-2" fill="none" stroke="#61616b" stroke-width="2" x1="3" y1="5" x2="10" y2="5"></line> <polyline data-color="color-2" fill="none" stroke="#61616b" stroke-width="2" points=" 3,1 3,21 10,21 "></polyline> <rect x="10" y="3" fill="none" stroke="#61616b" stroke-width="2" width="11" height="4"></rect> <rect x="10" y="19" fill="none" stroke="#61616b" stroke-width="2" width="11" height="4"></rect> <rect x="10" y="11" fill="none" stroke="#61616b" stroke-width="2" width="11" height="4"></rect></g>
+            </svg>
         </div>
-        <div style=" gap: 0.8rem; padding: 1.2rem;">
+        <div class="row" id="options" style="display: none; gap:5rem; width: 100%;padding:0.8rem 0.8rem 0 0;">
+            <button class="option" style="width: 8rem; padding: 0.8rem; border: none; background-color: #F4F4F5; cursor: pointer; border-radius: 0.8rem;" data-filter="outline">Outline</button>
+            <button class="option" style="width: 8rem; padding: 0.8rem; border: none; background-color: #F4F4F5; cursor: pointer; border-radius: 0.8rem;" data-filter="color">Color</button>
+            <button class="option" style="width: 8rem; padding: 0.8rem; border: none; background-color: #F4F4F5; cursor: pointer; border-radius: 0.8rem;" data-filter="fill">Fill</button>
+        </div>
+        <div class="row" style=" gap: 0.8rem; padding:1rem 0.8rem;">
             <p class="comp-text heading-9" style="color: #A2A2AA;">Results</p>
         </div>
-         <div id="result" class="col" style="gap: 1.6rem;">
-           
-        </div> 
+        <div id="result" class="col" style="gap: 1.6rem;"></div> 
     </div>
-</body  >
+</body>
 <script>
     const path = "https://cdn.jsdelivr.net/gh/WiniGit/wini-icons@latest"
     const urlIcons = [
@@ -11716,7 +11722,8 @@
                 
                 image.addEventListener('click', (ev) => {
                     // Gửi dữ liệu SVG đến Figma
-                    fetch(iconPath).then(svgData => {  parent.postMessage({ pluginMessage: { type: 'import-svg', svgData } }, '*'); })
+                    console.log("??????????????")
+                    fetch(`${path}${iconPath}`).then(svgData => { parent.postMessage({ pluginMessage: { type: 'import-svg', svgData } }, '*'); })
                 });
 
                 const resultItem = document.createElement('div');
@@ -11735,6 +11742,27 @@
         } else {
             const defaultItem = document.createElement('div');
             resultDiv.appendChild(defaultItem);
+        }
+    });
+
+    document.getElementById('btn-options').addEventListener('click', function() {
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.style.display = optionsDiv.style.display === 'block' ? 'none' : 'block'; // Toggle display
+    });
+
+    const optionButtons = document.querySelectorAll('.option');
+    optionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            selectedFilter = this.dataset.filter; // Lưu filter đã chọn
+            document.getElementById('input-search').dispatchEvent(new Event('input')); // Gọi lại sự kiện input để cập nhật kết quả
+            document.getElementById('options').style.display = 'none'; // Ẩn menu
+        });
+    });
+
+    // Đóng menu khi click ra ngoài
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('#btn-options') && !event.target.closest('#options')) {
+            document.getElementById('options').style.display = 'none';
         }
     });
 </script>
